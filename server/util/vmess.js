@@ -70,14 +70,14 @@ const tls = (c, data) => {
 }
 
 
-const vmess = (c) => {
+export const vmess = (c) => {
     var result = {
         tag: c.name,
         type: 'vmess',
         server: c.server,
         server_port: c.port,
         uuid: c.uuid,
-        secruity: 'auto',
+        security: 'auto',
     }
     tls(c, result)
     if (c.alterId != 0) {
@@ -96,7 +96,8 @@ const vmess = (c) => {
         vmess_grpc(c, result)
     }
 
-    return JSON.stringify(result, null, 2)
+    //return JSON.stringify(result)
+    return result
 }
 //暂不支持httpupgrade
 const vmess_ws = (c, data) => {
@@ -141,4 +142,4 @@ const vmess_grpc = (c, data) => {
     }
 }
 
-console.log(vmess(test)) //输出结果
+

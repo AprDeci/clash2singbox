@@ -1,0 +1,28 @@
+{
+  "name": "singboxconveterweb",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@primevue/themes": "^4.0.0",
+    "axios": "^1.7.2",
+    "pako": "^2.1.0",
+    "primevue": "^4.0.0",
+    "quill": "^2.0.2",
+    "vue": "^3.4.29"
+  },
+  "devDependencies": {
+    "@primevue/auto-import-resolver": "^4.0.0",
+    "@unocss/preset-uno": "^0.61.3",
+    "@vitejs/plugin-vue": "^5.0.5",
+    "unocss": "^0.61.3",
+    "unplugin-auto-import": "^0.18.0",
+    "unplugin-vue-components": "^0.27.2",
+    "vite": "^5.3.1"
+  }
+}
