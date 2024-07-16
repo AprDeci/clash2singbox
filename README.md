@@ -1,4 +1,4 @@
-# sing-box-conveter
+# clash&singbox-conveter
  通过clash订阅链接转换节点信息到singbox配置文件中
 
  作者考研更新比较慢,主要为了方便自己
