@@ -30,3 +30,10 @@
 | Hysteria | :x:(未来支持)                           |
 | Vmess    | :heavy_check_mark:(暂不支持HTTPUpgrade) |
 
+## 部署方式
+
+docker,访问IP:4012
+
+~~~docker
+docker run -p 3000:3000 -p 4012:4012 --name clash2singbox -d aprdec/clash2singbox:latest
+~~~
