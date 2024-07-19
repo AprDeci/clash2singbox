@@ -95,9 +95,6 @@ const transport = (c, result) => {
     if (c.network == 'grpc') {
         vmess_grpc(c, result)
     }
-    if (c.network!= 'ws'&&c.network!='http'&&c.network!='h2'&&c.network!='grpc'){
-        result.network = 'tcp'
-    }
 }
 
 //暂不支持httpupgrade
