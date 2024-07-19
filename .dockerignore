@@ -1,1 +1,4 @@
-node_modules
+# 屏蔽掉node_modules
+*/*/node_modules
+
+*//node_modules

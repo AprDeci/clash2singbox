@@ -1,17 +1,15 @@
 #!/bin/bash
+echo "Starting SingboxConveter..."
 
-# 定义Express和Vite的启动命令
-START_EXPRESS="cd server && npm run dev"
-START_VITE="cd web/SingboxConveterWeb && npm run dev"
+# 进入项目根目录
+cd /app/server
 
-# 使用nohup和&将命令放入后台运行，并重定向输出到日志文件
-nohup $START_EXPRESS > express.log 2>&1 &
-echo "Express server started with PID $!"
+nohup node app.js > /dev/null 2>&1 &
 
-nohup $START_VITE > vite.log 2>&1 &
-echo "Vite server started with PID $!"
+echo "SingboxConverter started."
 
-# 等待任意一个后台进程退出
-wait -n
+cd /app/web/SingboxConveterWeb
 
-echo "One of the servers has stopped. Exiting..."
+# 启动前端项目
+pnpm run dev
+
