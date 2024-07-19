@@ -1,5 +1,5 @@
 # 使用Node.js 18作为基础镜像
-FROM ubbn/pnpm
+FROM node18
 
 # 设置工作目录为项目根目录
 WORKDIR /app

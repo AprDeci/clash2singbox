@@ -1,37 +1,18 @@
 <script setup>
-import request from '../request/request';
 import pako from 'pako'
-import Buffer from 'buffer'
 const link = ref('')
 const isremote = ref(false)
 const example = ref('')
 const remoteurl = ref('')
 const resultlink = ref('')
+const apiurl = ref(window.location.hostname+':3000')
 const convert = () => {
     if(isremote.value){
-    //     request.get('clash2singbox', {
-    //     params: {
-    //         link: link.value,
-    //         moduleurl:remoteurl.value
-    //     }
-    // }).then(res => {
-    //     resultlink.value = request.defaults.baseURL+instance.defaults.url
-    // })
-        resultlink.value = request.defaults.baseURL+'/clash2singbox??url='+link.value+'&moduleurl='+remoteurl.value
+        resultlink.value = 'http://'+apiurl.value+'/clash2singbox?url='+link.value+'&moduleurl='+remoteurl.value
 
     }else{
-         let modulecoded = zlibcode(example.value)
-         modulecoded = modulecoded.replaceAll('+','*plus*')
-    //     request.get('clash2singbox', {
-    //     params: {
-    //         link: link.value,
-    //         module: modulecoded
-    //     }
-    // }).then(res => {
-    //     resultlink.value = request.defaults.baseURL+instance.defaults.url
-    // })
-        
-        resultlink.value = request.defaults.baseURL+'/clash2singbox??url='+link.value+'&module='+modulecoded
+        let modulecoded = zlibcode(example.value)
+        resultlink.value = 'http://'+apiurl.value+'/clash2singbox?url='+link.value+'&module='+modulecoded
     }
 
 }
@@ -55,8 +36,10 @@ const zlibcode=(input)=>{
                 <label for="link">输入订阅链接</label>
             </FloatLabel>
             </div>
-            <div>
+            <div class="flex items-center gap-12">
                 <ToggleButton v-model="isremote" onLabel="远程模板" offLabel="本地模板" />
+                <InputText id="apiurl" v-model="apiurl" placeholder="输入后端地址" />
+
             </div>
             <div class="h-48">
             <InputText type="text" v-model="remoteurl" v-show="isremote" placeholder="远程模板地址" class="w-3xl h-15"/>

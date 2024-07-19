@@ -1,53 +1,5 @@
-
-let c = {
-    name: 'Next Reset: 7 Day(s)',
-    type: 'vmess',
-    server: '104.219.52.93',
-    port: 34052,
-    uuid: 'cefcd89f-1e65-405e-b558-fdd4a737a3b4',
-    alterId: 0,
-    cipher: 'auto',
-    udp: true,
-    network: 'ws',
-    'ws-opts': {
-        path: '/',
-        headers: {
-            Host: 'us-east-1.292228.xyz'
-        },
-        'max-early-data': 2048,
-        'early-data-header-name': 'Sec-WebSocket-Protoco'
-    },
-    'ws-path': '/',
-    'ws-headers': {
-        Host: 'us-east-1.292228.xyz'
-    }
-}
-let test = {
-    name: 'vmess',
-    type: 'vmess',
-    server: 'server',
-    port: 443,
-    uuid: 'cefcd89f-1e65-405e-b558-fdd4a737a3b4',
-    alterId: 32,
-    cipher: 'auto',
-    udp: true,
-    tls: true,
-    fingerprint: 'xxxx',
-    'client-fingerprint': 'chrome',
-    'skip-cert-verify': true,
-    servername: 'example.com',
-    network: 'ws',
-    'ws-opts':{
-      path: '/path',
-      headers:{
-        Host: 'v2ray.com',
-        },
-      'max-early-data': 2048,
-      'early-data-header-name': 'Sec-WebSocket-Protocol',
-      'v2ray-http-upgrade': false,
-      'v2ray-http-upgrade-fast-open': false,
-    }
-}
+let vlesstest = '- { name: 美1|优化|0.5倍, type: vless, server: xg10.441122.xyz, port: 12789, uuid: 231fbe20-34bc-439b-b1fc-ae0cd319d310, alterId: 0, cipher: auto, udp: true, flow: xtls-rprx-vision, tls: true, servername: m.media-amazon.com, reality-opts: { public-key: cX_WQ7Gq4mqAFwPkSoic5th4lpCewW6_lh7cD1OtIlM, short-id: 3349c9cc }, client-fingerprint: ios }'
+import YAML from 'yaml'
 const tls = (c, data) => {
     if (c.tls) {
         data.tls={enabled: true}
@@ -57,15 +9,28 @@ const tls = (c, data) => {
             data.tls['server_name'] = c.sni
         }
         if(c.fingerprint||c['client-fingerprint']){
-            data.tls.utls={enbaled:true}
+            data.tls.utls={enabled:true}
             if(c.fingerprint){
                 data.tls.utls['fingerprint'] = c.fingerprint
             }else if(c['client-fingerprint']){
                 data.tls.utls['fingerprint'] = c['client-fingerprint']
             }
         }
-        data.tls.inscure = c['skip-cert-verify']
-        data.tls.alpn = c.alpn
+        if (c['skip-cert-verify']){
+            data.tls.insecure = c['skip-cert-verify']
+        }else{
+            data.tls.insecure = false
+        }
+        if (c['reality-opts']) {
+            data.tls.reality={}
+            data.tls.reality.enabled = true
+            data.tls.reality.public_key = c['reality-opts']['public-key']
+            data.tls.reality.short_id = c['reality-opts']['short-id']
+        }
+        if (c.alpn){
+            data.tls.alpn = c.alpn
+        }
+        
     }
 }
 
@@ -83,6 +48,41 @@ export const vmess = (c) => {
     if (c.alterId != 0) {
         result.alter_id = c.alterId
     }
+    // if (c.network == 'ws') {
+    //     vmess_ws(c, result)
+    // }
+    // if (c.network == 'http') {
+    //     vmess_http(c, result)
+    // }
+    // if (c.network == 'h2') {
+    //     vmess_h2(c, result)
+    // }
+    // if (c.network == 'grpc') {
+    //     vmess_grpc(c, result)
+    // }
+    transport(c, result)
+
+    //return JSON.stringify(result)
+    return result
+}
+
+export const vless = (c) => {
+    var result ={
+        tag: c.name,
+        type: 'vless',
+        server: c.server,
+        server_port: c.port,
+        uuid: c.uuid,
+    }
+    if (c.flow) {
+        result.flow = c.flow
+    }
+    tls(c,result)
+    transport(c, result)
+    return result
+}
+
+const transport = (c, result) => { 
     if (c.network == 'ws') {
         vmess_ws(c, result)
     }
@@ -95,13 +95,15 @@ export const vmess = (c) => {
     if (c.network == 'grpc') {
         vmess_grpc(c, result)
     }
-
-    //return JSON.stringify(result)
-    return result
+    if (c.network!= 'ws'&&c.network!='http'&&c.network!='h2'&&c.network!='grpc'){
+        result.network = 'tcp'
+    }
 }
+
 //暂不支持httpupgrade
 const vmess_ws = (c, data) => {
     let wsopts = c['ws-opts']
+    console.log(wsopts)
     data.transport = {
         type: 'ws',
         path: wsopts.path,
@@ -141,5 +143,4 @@ const vmess_grpc = (c, data) => {
         'service_name': c['grpc-opts']['grpc-service-name']
     }
 }
-
 

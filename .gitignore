@@ -164,3 +164,4 @@ dist
 server/util/example.json
 server/util/result.json
 server/test.js
+server/util/result.yaml
