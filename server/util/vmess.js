@@ -100,7 +100,6 @@ const transport = (c, result) => {
 //暂不支持httpupgrade
 const vmess_ws = (c, data) => {
     let wsopts = c['ws-opts']
-    console.log(wsopts)
     data.transport = {
         type: 'ws',
         path: wsopts.path,

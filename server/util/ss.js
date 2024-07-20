@@ -1,8 +1,9 @@
-
+let test ="- { name: '🇭🇰香港 Eons', type: ss, server: nq697nrvucq7kzmib5f5iywmwns2amu243zhz23cfkut2ew2.zhimg.xyz, port: 25465, cipher: aes-128-gcm, password: e34aa0fb-5acb-44c4-a91c-be0e674ae3d8, udp: true }"
+import YAML from 'yaml'
 export default function ss(c){
     var result = {
-        type : c.name,
-        type : 'ss',
+        tag : c.name,
+        type : 'shadowsocks',
         server : c.server,
         server_port : c.port,
         method : c.cipher,
@@ -24,6 +25,7 @@ export default function ss(c){
     if (!c.udp_over_tcp&&c.smux){
         smux(c,result)
     }
+    return result
 }
 
 function v2ray_plugin (c,result){
@@ -67,3 +69,6 @@ function smux (c,result){
     }
 
 }
+
+console.log(YAML.parse(test))
+console.log(ss(YAML.parse(test)[0]))

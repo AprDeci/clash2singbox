@@ -75,13 +75,11 @@ export default class clash2singboxService {
             }
 
             if (proxy.type === 'ss') {
-                if (proxy['plugin-opts'].mode!='tls'){
+                if('plugin-opts' in proxy && proxy['plugin-opts'].mode=='tls'){
+                    result.push(sstls(proxy))
+                }else{
                     result.push(ss(proxy))
                 }
-                if (proxy['plugin-opts'].mode=='tls'){
-                    result.push(sstls(proxy))
-                }
-                
             }
             if (proxy.type ==='vless') {
                 result.push(vless(proxy))
