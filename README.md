@@ -15,12 +15,24 @@
                 "direct-out",
                 "block-out",
                 "自动选择",
-                "include:HKG|TWN",
+                "include:HKG|TWN|JPKEY",(相当于include:HKG|TWN|日本|JP|Japan|jp)
                 "exclude:0.1X"
             ],
             "default": "自动选择"
         }
   ```
+
+**支持特定关键词,方便不同订阅配置通用**
+
+| 关键词 | 包含内容                       |
+| ------ | ------------------------------ |
+| HKKEY  | '香港','HK','Hong Kong','hk'   |
+| TWKEY  | '台湾','TW','Taiwan','tw'      |
+| JPKEY  | '日本','JP','Japan','jp'       |
+| USKEY  | '美国','US','America','us'     |
+| SGKEY  | '新加坡','SG','Singapore','sg' |
+
+
 
 ## 支持协议
 
