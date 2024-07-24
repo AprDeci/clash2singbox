@@ -1,4 +1,4 @@
-let test ="- { name: '🇭🇰香港 Eons', type: ss, server: nq697nrvucq7kzmib5f5iywmwns2amu243zhz23cfkut2ew2.zhimg.xyz, port: 25465, cipher: aes-128-gcm, password: e34aa0fb-5acb-44c4-a91c-be0e674ae3d8, udp: true }"
+
 import YAML from 'yaml'
 export default function ss(c){
     var result = {
@@ -69,6 +69,3 @@ function smux (c,result){
     }
 
 }
-
-console.log(YAML.parse(test))
-console.log(ss(YAML.parse(test)[0]))

@@ -12,3 +12,4 @@ app.listen(port, () => {
   })
 
 app.use('/clash2singbox', router);
+app.use(express.static('test'));

@@ -37,7 +37,7 @@ jobs:
         push: true
         tags: ${{ secrets.DOCKERHUB_USERNAME }}/clash2singbox:latest
     -
-      name: Watchoverhttptriger
+      name: Watchover httptriger
       run: |
         curl -H "Authorization: ${{secrets.WATCHOVERHTTPTRIGGER_TOKEN}}" ${{secrets.WATCHOVERHTTPTRIGGER_URL}}
     

@@ -169,3 +169,6 @@ server/util/example.json
 server/util/result.json
 server/test.js
 server/util/result.yaml
+server/test/example.json
+server/test/result.yaml
+server/test/test.js
