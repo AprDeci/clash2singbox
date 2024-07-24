@@ -37,13 +37,15 @@ const zlibcode=(input)=>{
 
 <template>
     <Toast />
-    <div class="main mx-auto flex sm:justify-center items-center max-w-7xl sm:h-3xl flex-col">
+    <div class="main mx-auto flex xl:justify-center items-center max-w-7xl sm:h-3xl flex-col">
         <div class="inner mx-auto w-100%  max-w-5xl border-solid border-gray border-2 rounded-2xl p-5 min-h-108 max-h-202 flex flex-col justify-between items-center">
             <div class="m-b-5">
+
             <FloatLabel>
-                <InputText class="w-80vw sm:w-3xl h-14" id="link" v-model="link" />
-                <label for="link">输入订阅链接</label>
+                <Textarea class="w-80vw sm:w-3xl h-28 break-all resize-none" rows="5" cols="30" v-model="link" />
+                <label>输入订阅链接</label>
             </FloatLabel>
+
             </div>
             <div class="flex items-center gap-5 sm:gap-12 ">
                 <ToggleButton class="" v-model="isremote" onLabel="远程模板" offLabel="本地模板" />
@@ -52,7 +54,7 @@ const zlibcode=(input)=>{
             </div>
             <div class="h-48 m-b-5">
             <InputText type="text" v-model="remoteurl" v-show="isremote" placeholder="远程模板地址" class="w-80vw sm:w-3xl h-15 m-t-5"/>
-            <Textarea class="w-80vw sm:w-3xl h-48 max-h-160 m-xy"  v-model="example"  rows="5" cols="30" v-show="!isremote" placeholder="本地模板" />
+            <Textarea class="w-80vw sm:w-3xl h-48 max-h-160 m-xy resize-none"  v-model="example"  rows="5" cols="30" v-show="!isremote" placeholder="本地模板" />
             </div>
             <Button label="转换" class="w-80vw sm:w-3xl h-14" @click="convert" />
         </div>
@@ -65,5 +67,13 @@ const zlibcode=(input)=>{
 </template>
 
 <style scoped>
-
+.p-floatlabel:has(input:focus) label,
+.p-floatlabel:has(input.p-filled) label,
+.p-floatlabel:has(input:-webkit-autofill) label,
+.p-floatlabel:has(textarea:focus) label,
+.p-floatlabel:has(textarea.p-filled) label,
+.p-floatlabel:has(.p-inputwrapper-focus) label,
+.p-floatlabel:has(.p-inputwrapper-filled) label {
+    top: -.5rem;
+}
 </style>
