@@ -35,7 +35,7 @@ const convert = () => {
     navigator.clipboard.writeText(resultlink.value).then(() => {
         toast.add({ severity: 'success', summary: '成功', detail: '已复制到剪贴板', life: 3000 });
     }).catch((error) => {
-
+        toast.add({ severity: 'error', summary: '失败', detail: error, life: 3000 });
     });
 
 }
