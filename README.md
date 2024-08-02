@@ -3,7 +3,7 @@
 
  作者考研更新比较慢,主要为了方便自己
 
-[demo(后端端口需改为3050)](http://singbox.aprdec.top/)
+[demo(后端端口需改为48909)](http://singbox.aprdec.top/)
 
 ## 配置文件编写方法
   程序只修改outbounds部分,**配置格式如下,多个关键词使用|分割**
