@@ -1,4 +1,3 @@
-let vlesstest = '- { name: 美1|优化|0.5倍, type: vless, server: xg10.441122.xyz, port: 12789, uuid: 231fbe20-34bc-439b-b1fc-ae0cd319d310, alterId: 0, cipher: auto, udp: true, flow: xtls-rprx-vision, tls: true, servername: m.media-amazon.com, reality-opts: { public-key: cX_WQ7Gq4mqAFwPkSoic5th4lpCewW6_lh7cD1OtIlM, short-id: 3349c9cc }, client-fingerprint: ios }'
 import YAML from 'yaml'
 const tls = (c, data) => {
     if (c.tls) {

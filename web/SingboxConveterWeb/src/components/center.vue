@@ -8,6 +8,21 @@ const remoteurl = ref('')
 const resultlink = ref('')
 const apiurl = ref(window.location.hostname+':3000')
 const toast = useToast();
+
+const linktextarea_placeholder="输入订阅链接地址,多个订阅使用 | 间隔"
+const localmodueltextarea_placeholder=`输入本地模板,只修改outbounds部分,配置格式如下,多个关键词使用|分割
+{
+          "type": "selector",
+          "tag": "手动选择",
+          "outbounds": [
+              "direct-out",
+              "block-out",
+              "自动选择",
+              "include:HKG|TWN|JPKEY",(相当于include:HKG|TWN|日本|JP|Japan|jp)
+              "exclude:0.1X"
+          ],
+          "default": "自动选择"
+      }`
 const convert = () => {
     if(isremote.value){
         resultlink.value = 'http://'+apiurl.value+'/clash2singbox?url='+link.value+'&moduleurl='+remoteurl.value
@@ -33,6 +48,8 @@ const zlibcode=(input)=>{
 
     return base64String
 }
+
+
 </script>
 
 <template>
@@ -41,10 +58,7 @@ const zlibcode=(input)=>{
         <div class="inner mx-auto w-100%  max-w-5xl border-solid border-gray border-2 rounded-2xl p-5 min-h-108 max-h-202 flex flex-col justify-between items-center">
             <div class="m-b-5">
 
-            <FloatLabel>
-                <Textarea class="w-80vw sm:w-3xl h-28 break-all resize-none" rows="5" cols="30" v-model="link" />
-                <label>输入订阅链接</label>
-            </FloatLabel>
+            <Textarea class="w-80vw sm:w-3xl h-28 break-all resize-none" rows="5" cols="30" v-model="link" :placeholder="linktextarea_placeholder"/>
 
             </div>
             <div class="flex items-center gap-5 sm:gap-12 ">
@@ -52,9 +66,9 @@ const zlibcode=(input)=>{
                 <InputText class="w-48 sm:w-64  h-10" id="apiurl" v-model="apiurl" placeholder="输入后端地址" />
 
             </div>
-            <div class="h-48 m-b-5">
+            <div>
             <InputText type="text" v-model="remoteurl" v-show="isremote" placeholder="远程模板地址" class="w-80vw sm:w-3xl h-15 m-t-5"/>
-            <Textarea class="w-80vw sm:w-3xl h-48 max-h-160 m-xy resize-none"  v-model="example"  rows="5" cols="30" v-show="!isremote" placeholder="本地模板" />
+            <Textarea class="w-80vw sm:w-3xl h-64 max-h-160 m-xy resize-none"  v-model="example"  rows="5" cols="30" v-show="!isremote" :placeholder="localmodueltextarea_placeholder" />
             </div>
             <Button label="转换" class="w-80vw sm:w-3xl h-14" @click="convert" />
         </div>
