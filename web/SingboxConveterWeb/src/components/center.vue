@@ -3,6 +3,7 @@ import pako from 'pako'
 import { useToast } from "primevue/usetoast";
 const link = ref('')
 const isremote = ref(false)
+const advancemod = ref(false)
 const example = ref('')
 const remoteurl = ref('')
 const resultlink = ref('')
@@ -49,22 +50,49 @@ const zlibcode=(input)=>{
     return base64String
 }
 
+const linkgroups = ref([{
+    "link":"",
+    "name":"",
+}])
+
+const addlinkgroup = ()=>{
+    linkgroups.value.push({
+        "link":"",
+        "name":"",
+    })
+}
+const removeLinkGroup = (index) => {
+    linkgroups.value.splice(index, 1);
+}
+
+
 
 </script>
 
 <template>
     <Toast />
-    <div class="main mx-auto flex xl:justify-center items-center max-w-7xl sm:h-3xl flex-col">
-        <div class="inner mx-auto w-100%  max-w-5xl border-solid border-gray border-2 rounded-2xl p-5 min-h-108 max-h-202 flex flex-col justify-between items-center">
+    <div class="main mx-auto flex xl:justify-center items-center max-w-7xl  flex-col">
+        <div class="inner mx-auto w-100%  max-w-5xl border-solid border-gray border-2 rounded-2xl p-5 min-h-108  flex flex-col justify-between items-center">
             <div class="m-b-5">
+            <Textarea v-if="!advancemod" class="w-80vw sm:w-3xl h-28 break-all resize-none" rows="5" cols="30" v-model="link" :placeholder="linktextarea_placeholder"/>
+            <div v-if="advancemod">
+                <div  class="advanc_link_input linkgroup" v-for="(linkgroup,index) in linkgroups" :key="index">
 
-            <Textarea class="w-80vw sm:w-3xl h-28 break-all resize-none" rows="5" cols="30" v-model="link" :placeholder="linktextarea_placeholder"/>
-
+                    <div class="linkgroupinput  border-b-black border-solid border-1 rounded-xl flex justify-between items-center p-2 gap-5 m-b-5">
+                    <Textarea class="w-50vw sm:w-120 h-10 break-all resize-none" rows="5" cols="30" ></textarea>
+                    <Textarea class="w-50vw sm:w-13vw h-10 break-all resize-none" rows="5" cols="30" ></textarea>
+                    <Button class="h-10" label="X" severity="danger" @click="removeLinkGroup"></Button>
+                    </div>
+                </div>
+                <div class="flex">
+                    <Button class="items-center" label="添加链接" @click="addlinkgroup" />
+                </div>
+            </div>
             </div>
             <div class="flex items-center gap-5 sm:gap-12 ">
+                <ToggleButton class="" v-model="advancemod" onLabel="高级模式" offLabel="简便模式" />
                 <ToggleButton class="" v-model="isremote" onLabel="远程模板" offLabel="本地模板" />
                 <InputText class="w-48 sm:w-64  h-10" id="apiurl" v-model="apiurl" placeholder="输入后端地址" />
-
             </div>
             <div>
             <InputText type="text" v-model="remoteurl" v-show="isremote" placeholder="远程模板地址" class="w-80vw sm:w-3xl h-15 m-t-5"/>

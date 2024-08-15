@@ -2,7 +2,6 @@ import {vmess,vless} from '../util/vmess.js'
 import ss from '../util/ss.js'
 import sstls from '../util/sstls.js'
 import axios from 'axios'
-import fs from 'fs'
 import YAML from 'yaml'
 import zlib from 'zlib'
 import {union} from 'es-toolkit';
