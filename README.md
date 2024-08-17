@@ -40,7 +40,7 @@
 | :------- | --------------------------------------- |
 | SS(tls)  | :heavy_check_mark:                     |
 | Vless    | :heavy_check_mark:                     |
-| trojon   | :x:(未来支持)                           |
+| trojon   | :heavy_check_mark:                     |
 | Hysteria | :x:(未来支持)                           |
 | Vmess    | :heavy_check_mark:(暂不支持HTTPUpgrade) |
 

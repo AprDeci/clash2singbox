@@ -77,7 +77,6 @@ const removeLinkGroup = (index) => {
             <Textarea v-if="!advancemod" class="w-80vw sm:w-3xl h-28 break-all resize-none" rows="5" cols="30" v-model="link" :placeholder="linktextarea_placeholder"/>
             <div v-if="advancemod">
                 <div  class="advanc_link_input linkgroup" v-for="(linkgroup,index) in linkgroups" :key="index">
-
                     <div class="linkgroupinput  border-b-black border-solid border-1 rounded-xl flex justify-between items-center p-2 gap-5 m-b-5">
                     <Textarea class="w-50vw sm:w-120 h-10 break-all resize-none" rows="5" cols="30" ></textarea>
                     <Textarea class="w-50vw sm:w-13vw h-10 break-all resize-none" rows="5" cols="30" ></textarea>

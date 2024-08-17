@@ -1,5 +1,4 @@
 
-import YAML from 'yaml'
 export default function ss(c){
     var result = {
         tag : c.name,

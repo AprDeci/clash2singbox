@@ -1,13 +1,10 @@
-import {vmess,vless} from '../util/vmess.js'
-import ss from '../util/ss.js'
-import sstls from '../util/sstls.js'
+
 import axios from 'axios'
 import YAML from 'yaml'
 import zlib from 'zlib'
 import {union} from 'es-toolkit';
 import {concat} from 'es-toolkit/compat';
-
-
+import convetor from '../util/convetor.js';
 
 const HKKEY = ['香港', 'HK', 'Hong Kong', 'hk']
 const TWKEY = ['台湾', 'TW', 'Taiwan', 'tw']
@@ -42,8 +39,8 @@ export default class clash2singboxService {
 
     }
 
-    clashurltoarray(clashurl) {
-        const urls = clashurl.split('|')
+    clashurltoarray(clashurls) {
+        const urls = clashurls.split('|')
         return urls
     }
 
@@ -57,7 +54,6 @@ export default class clash2singboxService {
                     'Connection': 'keep-alive'
                 }
             };
-    
             try {
                 const response = await axios(url, config);
                 return response.data;
@@ -86,39 +82,21 @@ export default class clash2singboxService {
         }
     }
 
+
+    // 转换为singbox节点
     processProxies(clashconfigs) {
-        let result = []
+        const result = []
         clashconfigs.forEach((clashconfig) => {
             const yamlcontent = YAML.parse(clashconfig)
             const proxies = yamlcontent.proxies
-
-            proxies.forEach((proxy) => {
-                if (proxy.type === 'vmess') {
-                    result.push(vmess(proxy))
-                }
-    
-                if (proxy.type === 'ss') {
-                    if ('plugin-opts' in proxy && proxy['plugin-opts'].mode == 'tls') {
-                        result.push(sstls(proxy))
-                    } else {
-                        result.push(ss(proxy))
-                    }
-                }
-                if (proxy.type === 'vless') {
-                    result.push(vless(proxy))
-                }
-    
-            })
+            result.push(convetor(proxies))
         })
-
         return result
     }
 
 
     parsemodule(clashconfigs, moduel) {
         let names = []
-
-        
         // 定义一个函数getProxyNames，接收一个参数proxies
         const getProxyNames = (proxies) => {
             // 使用reduce函数，将proxies中的每一个元素proxy的name属性添加到acc数组中，并返回acc数组
@@ -158,7 +136,7 @@ export default class clash2singboxService {
                     var exclude = excludes[0].split(':')[1].split('|')
                     exclude = addKey(exclude) //添加关键词
                     finalnames = finalnames.filter(name => exclude.every(keyword => !name.includes(keyword)))
-                    console.log(exclude)
+
                 }
                 outbound.outbounds = outbound.outbounds.filter(item => !item.startsWith('include') && !item.startsWith('exclude'))
                 outbound.outbounds = outbound.outbounds.concat(finalnames)
