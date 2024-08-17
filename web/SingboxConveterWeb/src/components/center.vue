@@ -26,11 +26,11 @@ const localmodueltextarea_placeholder=`输入本地模板,只修改outbounds部�
       }`
 const convert = () => {
     if(isremote.value){
-        resultlink.value = 'http://'+apiurl.value+'/clash2singbox?url='+link.value+'&moduleurl='+remoteurl.value
+        resultlink.value = 'http://'+apiurl.value+'/clash2singbox?urls='+link.value+'&moduleurl='+remoteurl.value
 
     }else{
         let modulecoded = zlibcode(example.value)
-        resultlink.value = 'http://'+apiurl.value+'/clash2singbox?url='+link.value+'&module='+modulecoded
+        resultlink.value = 'http://'+apiurl.value+'/clash2singbox?urls='+link.value+'&module='+modulecoded
     }
     // 剪切板内容设置为resultlink.value
     navigator.clipboard.writeText(resultlink.value).then(() => {
