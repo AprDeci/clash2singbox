@@ -24,13 +24,35 @@ const localmodueltextarea_placeholder=`输入本地模板,只修改outbounds部�
           ],
           "default": "自动选择"
       }`
-const convert = () => {
-    if(isremote.value){
-        resultlink.value = 'http://'+apiurl.value+'/clash2singbox?urls='+link.value+'&moduleurl='+remoteurl.value
 
+    //   生成链接
+const convert = () => {
+    if(!advancemod.value){
+        if(isremote.value){
+            resultlink.value = 'http://'+apiurl.value+'/clash2singbox?urls='+link.value+'&moduleurl='+remoteurl.value
+        }else{
+            let modulecoded = zlibcode(example.value)
+            resultlink.value = 'http://'+apiurl.value+'/clash2singbox?urls='+link.value+'&module='+modulecoded
+        }
     }else{
-        let modulecoded = zlibcode(example.value)
-        resultlink.value = 'http://'+apiurl.value+'/clash2singbox?urls='+link.value+'&module='+modulecoded
+        // 检测linkgroups的每个子项是否所有两个元素均为空,若为空弹窗
+        const allItemsNotEmpty = linkgroups.value.every(item => 
+            item.link && item.name
+            );
+        if(!allItemsNotEmpty){
+            alert('不可以链接和链接名均为空哦')
+            return
+        }
+        const lg = linkgroups.value
+            .map(item => `${item.link},${item.name}`) // 将每个对象转换为"link,name"格式的字符串
+            .join('|'); // 使用"|"连接所有字符串
+
+        if(isremote.value){
+            resultlink.value = 'http://'+apiurl.value+'/clash2singbox?lg='+lg+'&moduleurl='+remoteurl.value
+        }else{
+            let modulecoded = zlibcode(example.value)
+            resultlink.value = 'http://'+apiurl.value+'/clash2singbox?lg='+lg+'&module='+modulecoded
+        }
     }
     // 剪切板内容设置为resultlink.value
     navigator.clipboard.writeText(resultlink.value).then(() => {
@@ -75,16 +97,14 @@ const removeLinkGroup = (index) => {
         <div class="inner mx-auto w-100%  max-w-5xl border-solid border-gray border-2 rounded-2xl p-5 min-h-108  flex flex-col justify-between items-center">
             <div class="m-b-5">
             <Textarea v-if="!advancemod" class="w-80vw sm:w-3xl h-28 break-all resize-none" rows="5" cols="30" v-model="link" :placeholder="linktextarea_placeholder"/>
-            <div v-if="advancemod">
-                <div  class="advanc_link_input linkgroup" v-for="(linkgroup,index) in linkgroups" :key="index">
-                    <div class="linkgroupinput  border-b-black border-solid border-1 rounded-xl flex justify-between items-center p-2 gap-5 m-b-5">
-                    <Textarea class="w-50vw sm:w-120 h-10 break-all resize-none" rows="5" cols="30" ></textarea>
-                    <Textarea class="w-50vw sm:w-13vw h-10 break-all resize-none" rows="5" cols="30" ></textarea>
-                    <Button class="h-10" label="X" severity="danger" @click="removeLinkGroup"></Button>
+            <div v-if="advancemod" class="border-b-gray border-solid border-1 rounded-xl p-2 sm:w-3xl w-90vw">
+                    <div  class="advanc_link_input linkgroup flex items-center sm:justify-between m-b-2" v-for="(linkgroup,index) in linkgroups" :key="index">
+                        <Textarea class="w-50vw sm:w-120 h-10 break-all resize-none" rows="5" cols="30" v-model="linkgroup.link"></textarea>
+                        <Textarea class="w-30vw sm:w-13vw h-10 break-all resize-none" rows="5" cols="30" v-model="linkgroup.name"></textarea>
+                        <Button class="h-10" label="X" severity="danger" @click="removeLinkGroup"></Button>
                     </div>
-                </div>
-                <div class="flex">
-                    <Button class="items-center" label="添加链接" @click="addlinkgroup" />
+                <div class="flex items-center justify-center">
+                    <Button class="" label="添加链接" @click="addlinkgroup" />
                 </div>
             </div>
             </div>

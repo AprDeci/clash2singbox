@@ -25,7 +25,6 @@ export default function convetor(proxies){
             result.push(trojan(proxie))
         }
     })
-    return result
-}
+    return resu}
 
 
