@@ -73,7 +73,7 @@ export const trojan = (c) => {
         tag: c.name,
         type: 'trojan',
         server: c.server,
-        port: c.port,
+        server_port: c.port,
         password: c.password,
     }
     tls(c, result)

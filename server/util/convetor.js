@@ -3,7 +3,7 @@ import ss from './ss.js'
 import sstls from './sstls.js'
 import { multiplex } from './multiplex.js'
 
-export default function convetor(proxies){
+export default function convetor(proxies,name){
     var result = []
     
     proxies.forEach(proxie => {
@@ -21,10 +21,10 @@ export default function convetor(proxies){
             result.push(vless(proxie))
         }
         if (proxie.type==='trojan'){
-            console.log('1111')
             result.push(trojan(proxie))
         }
     })
-    return resu}
+    return result
+}
 
 

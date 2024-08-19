@@ -37,7 +37,7 @@ const convert = () => {
     }else{
         // 检测linkgroups的每个子项是否所有两个元素均为空,若为空弹窗
         const allItemsNotEmpty = linkgroups.value.every(item => 
-            item.link && item.name
+            item.link || item.name
             );
         if(!allItemsNotEmpty){
             alert('不可以链接和链接名均为空哦')
@@ -48,10 +48,10 @@ const convert = () => {
             .join('|'); // 使用"|"连接所有字符串
 
         if(isremote.value){
-            resultlink.value = 'http://'+apiurl.value+'/clash2singbox?lg='+lg+'&moduleurl='+remoteurl.value
+            resultlink.value = 'http://'+apiurl.value+'/clash2singbox/advance?lg='+lg+'&moduleurl='+remoteurl.value
         }else{
             let modulecoded = zlibcode(example.value)
-            resultlink.value = 'http://'+apiurl.value+'/clash2singbox?lg='+lg+'&module='+modulecoded
+            resultlink.value = 'http://'+apiurl.value+'/clash2singbox/advance?lg='+lg+'&module='+modulecoded
         }
     }
     // 剪切板内容设置为resultlink.value
