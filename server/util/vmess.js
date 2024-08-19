@@ -1,6 +1,6 @@
-import YAML from 'yaml'
+
 const tls = (c, data) => {
-    if (c.tls) {
+    if (c.tls||c.type==='trojan') {
         data.tls={enabled: true}
         if (c.servername){
             data.tls['server_name'] = c.servername
@@ -13,7 +13,7 @@ const tls = (c, data) => {
                 data.tls.utls['fingerprint'] = c.fingerprint
             }else if(c['client-fingerprint']){
                 data.tls.utls['fingerprint'] = c['client-fingerprint']
-            }
+            }z
         }
         if (c['skip-cert-verify']){
             data.tls.insecure = c['skip-cert-verify']
@@ -47,21 +47,8 @@ export const vmess = (c) => {
     if (c.alterId != 0) {
         result.alter_id = c.alterId
     }
-    // if (c.network == 'ws') {
-    //     vmess_ws(c, result)
-    // }
-    // if (c.network == 'http') {
-    //     vmess_http(c, result)
-    // }
-    // if (c.network == 'h2') {
-    //     vmess_h2(c, result)
-    // }
-    // if (c.network == 'grpc') {
-    //     vmess_grpc(c, result)
-    // }
     transport(c, result)
 
-    //return JSON.stringify(result)
     return result
 }
 
@@ -78,6 +65,24 @@ export const vless = (c) => {
     }
     tls(c,result)
     transport(c, result)
+    return result
+}
+
+export const trojan = (c) => {
+    var result = {
+        tag: c.name,
+        type: 'trojan',
+        server: c.server,
+        server_port: c.port,
+        password: c.password,
+    }
+    tls(c, result)
+    if (c.network =='ws'){
+        vmess_ws(c, result)
+    }
+    if (c.network == 'grpc'){
+        vmess_grpc(c, result)
+    }
     return result
 }
 

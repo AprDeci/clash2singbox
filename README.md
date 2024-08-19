@@ -32,7 +32,11 @@
 | USKEY  | '美国','US','America','us'     |
 | SGKEY  | '新加坡','SG','Singapore','sg' |
 
+**高级模式**
 
+每行输入一个链接和指定名称,将自动创建该名称urltest策略组包含该订阅所有节点.
+
+防止多订阅节点重复,所有命名订阅添加后缀
 
 ## 支持协议
 
@@ -40,7 +44,7 @@
 | :------- | --------------------------------------- |
 | SS(tls)  | :heavy_check_mark:                     |
 | Vless    | :heavy_check_mark:                     |
-| trojon   | :x:(未来支持)                           |
+| trojon   | :heavy_check_mark:                     |
 | Hysteria | :x:(未来支持)                           |
 | Vmess    | :heavy_check_mark:(暂不支持HTTPUpgrade) |
 
