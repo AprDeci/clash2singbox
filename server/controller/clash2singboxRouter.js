@@ -9,11 +9,24 @@ router.get('/', async(req, res) => {
     let moduleurl = req.query.moduleurl
     let option = {
         module : module,
-        moduleurl : moduleurl
+        moduleurl : moduleurl,
     }
-    let data = await clash2singboxservice.getyaml(clashurl,option)
-    res.send(data)
+        let data = await clash2singboxservice.getyaml(clashurl,option)
+        res.send(data)
+
 })
 
+router.get('/advance', async(req, res) => {
+    let lg = req.query.lg
+    let module = req.query.module
+    let moduleurl = req.query.moduleurl
+    let option = {
+        module : module,
+        moduleurl : moduleurl,
+}
+        let data = await clash2singboxservice.getyaml_advanced(lg,option)
+        res.send(data)
+
+})
 
 export default router
