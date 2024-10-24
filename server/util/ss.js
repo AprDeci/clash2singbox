@@ -18,10 +18,12 @@ export default function ss(c){
             v2ray_plugin(c,result)
         }else{
             result.plugin = 'obfs-local'
+            result.plugin_opts = ''
             obfs_local(c,result)
         }
     }
     if (!c.udp_over_tcp&&c.smux){
+        result.multiplex={}
         smux(c,result)
     }
     return result
@@ -46,10 +48,10 @@ function v2ray_plugin (c,result){
 }
 
 function obfs_local (c,result){
-    if(c['plugin-opts'].mode)
-        result.plugin_opts.mode = c['plugin-opts'].mode
-    if(c['plugin-opts'].host)
-        result.plugin_opts.host = c['plugin-opts'].host
+        if(c['plugin-opts'].mode)
+            result.plugin_opts += `obfs=${c['plugin-opts'].mode};`
+        if(c['plugin-opts'].host)
+            result.plugin_opts += `obfs-host=${c['plugin-opts'].host}`
 }
 function smux (c,result){
     result.multiplex.enabled = c.smux.enabled

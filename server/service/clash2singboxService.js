@@ -45,15 +45,21 @@ export default class clash2singboxService {
         const {urls,url_names} = this.lgtoarray(lg)
         console.log(urls,url_names)
         const datas = await this.downloadclash(urls)
-        if (module){
-            module = module.replace(/\s/g, '+')
-            const decompressed = zlib.inflateSync(Buffer.from(module, 'base64')).toString('utf8');
-            const result = this.parsemodule_advanced(datas, decompressed,url_names)
-            return result
-        }
-        if (moduleurl) {
-            const module = await this.downloadmodule(moduleurl)
-
+        try{
+            if (module){
+                module = module.replace(/\s/g, '+')
+                const decompressed = zlib.inflateSync(Buffer.from(module, 'base64')).toString('utf8');
+                const result = this.parsemodule_advanced(datas, decompressed,url_names)
+                return result
+            }
+            if (moduleurl) {
+                const module = await this.downloadmodule(moduleurl)
+                const result = this.parsemodule_advanced(datas, module,url_names)
+                return result
+            }
+        } catch (error) {
+            console.log(error)
+            return error.message
         }
     }
 
@@ -250,7 +256,6 @@ export default class clash2singboxService {
                 })
         //添加outbounds节点信息
         example.outbounds = example.outbounds.concat(this.processProxies(clashconfigs, url_names))
-
         return example
     }
 
